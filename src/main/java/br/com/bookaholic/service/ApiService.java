@@ -15,7 +15,7 @@ public class ApiService {
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
-            System.out.println("Ocorreu um erro: " + e.getMessage());
+            System.out.println("Não foi possível estabelecer a conexão.");
         }
 
         String responseBody = response != null ? response.body() : null;
