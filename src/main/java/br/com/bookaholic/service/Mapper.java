@@ -9,7 +9,7 @@ public class Mapper {
     public <T> T getClassFromJson(String json, Class<T> classToMap) {
         try {
             return objectMapper.readValue(json, classToMap);
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             throw new RuntimeException("Erro ao converter JSON: " + e.getMessage());
         }
     }
