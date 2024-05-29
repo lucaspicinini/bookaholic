@@ -15,7 +15,8 @@ public class BookaholicApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		try {
-			EntryPoint.exec();
+			EntryPoint entryPoint = new EntryPoint();
+			entryPoint.init();
 		} catch (Exception e) {
             throw new Exception(e);
         }
