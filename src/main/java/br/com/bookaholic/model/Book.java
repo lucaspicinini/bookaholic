@@ -3,23 +3,36 @@ package br.com.bookaholic.model;
 import java.util.List;
 
 public class Book {
-    private Integer id;
-    private String title;
-    private Boolean copyright;
-    private Integer downloadCount;
-    private List<String> subjects;
-    private List<Author> authors;
+    private final Integer id;
+    private final String title;
+    private final Boolean copyright;
+    private final String copyrightText;
+    private final Integer downloadCount;
+    private final List<String> subjects;
+    private final List<Author> authors;
 
     public Book(BookData book) {
         this.id = book.id();
         this.title = book.title();
         this.copyright = book.copyright();
+        this.copyrightText = this.copyright ? "Sim" : "Não";
         this.downloadCount = book.downloadCount();
         this.subjects = book.subjects();
         this.authors = book.authors().stream().map(Author::new).toList();
     }
 
-    public int getId() {
+    public void printBook() {
+        System.out.println("**** Livro: " + this.title + " ****");
+        System.out.println("--- Id: " + this.id);
+        this.authors.forEach(author -> System.out.println("--- Autores: " + author.getName()));
+        System.out.println("--- Possui copyright? " + this.copyrightText);
+        System.out.println("--- Número de downloads: " + this.downloadCount);
+        System.out.println("--- Temas: ");
+        this.subjects.forEach(subject -> System.out.println("+ " + subject));
+        System.out.println();
+    }
+
+    public Integer getId() {
         return id;
     }
 
@@ -27,11 +40,11 @@ public class Book {
         return title;
     }
 
-    public boolean isCopyright() {
+    public Boolean getCopyright() {
         return copyright;
     }
 
-    public int getDownloadCount() {
+    public Integer getDownloadCount() {
         return downloadCount;
     }
 
@@ -39,15 +52,7 @@ public class Book {
         return subjects;
     }
 
-    public void setSubjects(List<String> subjects) {
-        this.subjects = subjects;
-    }
-
     public List<Author> getAuthors() {
         return authors;
-    }
-
-    public void setAuthors(List<Author> authors) {
-        this.authors = authors;
     }
 }
