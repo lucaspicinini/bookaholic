@@ -10,6 +10,7 @@ public record DataIndex(
         @JsonAlias("count") Integer totalBooks,
         @JsonAlias("next") String nextPage,
         @JsonAlias("previous") String previousPage,
-        @JsonAlias("results") List<BookData> books
+        @JsonAlias("results") List<BookData> books,
+        @JsonAlias("detail") String invalidPage
 ) {
 }
