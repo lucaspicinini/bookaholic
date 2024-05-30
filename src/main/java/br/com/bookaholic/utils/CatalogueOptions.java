@@ -38,6 +38,7 @@ public class CatalogueOptions {
                 }
                 break;
             case "3":
+                ScreenClear.clear();
                 System.out.println("Digite o número da página para busca: ");
                 apiPageNumber = scanner.nextInt();
                 scanner.nextLine();

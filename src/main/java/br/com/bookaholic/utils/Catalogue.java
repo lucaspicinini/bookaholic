@@ -26,9 +26,11 @@ public class Catalogue {
             System.out.println("***** Página: " + apiPage + " *****\n");
             Menu.printCatalogueMenu();
             String userOption = scanner.nextLine();
+            ScreenClear.clear();
             CatalogueOptions catalogueOptions = new CatalogueOptions(userOption);
             catalogueOptions.checkOption();
         } else {
+            ScreenClear.clear();
             System.out.println("Página: " + apiPage + " não encontrada");
             System.out.println("Voltando ao catálogo...\n");
             apiPageNumber = 1;

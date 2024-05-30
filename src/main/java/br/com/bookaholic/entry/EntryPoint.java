@@ -7,6 +7,7 @@ import br.com.bookaholic.utils.CatalogueOptions;
 import br.com.bookaholic.utils.Menu;
 import br.com.bookaholic.service.ApiService;
 import br.com.bookaholic.service.Mapper;
+import br.com.bookaholic.utils.ScreenClear;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +29,10 @@ public class EntryPoint {
 
         while (!exitLoop) {
             if (userInput.isEmpty()) {
+                ScreenClear.clear();
                 Menu.printMainMenu();
                 userInput = scanner.nextLine();
+                ScreenClear.clear();
             }
 
             switch (userInput) {
