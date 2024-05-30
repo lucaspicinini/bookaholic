@@ -6,9 +6,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class Author {
-    private String name;
-    private String birthYear;
-    private String deathYear;
+    private final String name;
+    private final String birthYear;
+    private final String deathYear;
 
     public Author(AuthorData author) {
         this.name = author.name();
