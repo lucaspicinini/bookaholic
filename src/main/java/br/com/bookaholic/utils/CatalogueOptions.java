@@ -38,8 +38,7 @@ public class CatalogueOptions {
                 }
                 break;
             case "3":
-                ScreenClear.clear();
-                System.out.println("Digite o número da página para busca: ");
+                Menu.askPage();
                 apiPageNumber = scanner.nextInt();
                 scanner.nextLine();
                 apiPage = String.valueOf(apiPageNumber).trim();
@@ -54,7 +53,8 @@ public class CatalogueOptions {
                 EntryPoint.setUserInput("");
                 break;
             default:
-                System.out.println("Selecione uma opção válida.");
+                Menu.invalidOption();
+                break;
         }
     }
 }

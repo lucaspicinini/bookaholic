@@ -23,16 +23,16 @@ public class Catalogue {
         if (this.dataIndex.invalidPage() == null) {
             List<Book> books = this.dataIndex.books().stream().map(Book::new).toList();
             books.forEach(Book::printBook);
-            System.out.println("***** Página: " + apiPage + " *****\n");
-            Menu.printCatalogueMenu();
+            Menu.page();
+            Menu.catalogueMenu();
             String userOption = scanner.nextLine();
             ScreenClear.clear();
             CatalogueOptions catalogueOptions = new CatalogueOptions(userOption);
             catalogueOptions.checkOption();
         } else {
             ScreenClear.clear();
-            System.out.println("Página: " + apiPage + " não encontrada");
-            System.out.println("Voltando ao catálogo...\n");
+            Menu.pageNotFound();
+            Menu.backToCatalogue();
             apiPageNumber = 1;
             apiPage = String.valueOf(apiPageNumber);
             EntryPoint.setApiPageNumber(apiPageNumber);
