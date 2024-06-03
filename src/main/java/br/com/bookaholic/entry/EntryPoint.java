@@ -1,13 +1,17 @@
 package br.com.bookaholic.entry;
 
+import br.com.bookaholic.controller.ArchiveOptions;
 import br.com.bookaholic.model.Book;
 import br.com.bookaholic.model.DataIndex;
 import br.com.bookaholic.repository.BookRepository;
-import br.com.bookaholic.utils.Catalogue;
+import br.com.bookaholic.controller.Catalogue;
 import br.com.bookaholic.utils.Menu;
 import br.com.bookaholic.service.ApiService;
 import br.com.bookaholic.service.Mapper;
 import br.com.bookaholic.utils.ScreenClear;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Scanner;
@@ -21,8 +25,9 @@ public class EntryPoint {
     private static Integer apiPageNumber = 1;
     private static String apiPage = String.valueOf(apiPageNumber);
     private static String userInput = "";
+    private static String archiveInput = "";
+    private static Integer pageNumber = 1;
     private String responseBody;
-
 
     public EntryPoint(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
@@ -74,6 +79,21 @@ public class EntryPoint {
                     ScreenClear.clear();
                     break;
                 case "3":
+                    while (!archiveInput.equals("0")) {
+                        Pageable pageable = PageRequest.of(pageNumber - 1, 10);
+                        Page<Book> page = bookRepository.findAll(pageable);
+                        page.forEach(Book::printBook);
+                        Menu.archiveMenu();
+                        Menu.archiveMenuInfo(pageNumber, page);
+                        Menu.askOption();
+                        archiveInput = scanner.nextLine();
+                        ScreenClear.clear();
+                        ArchiveOptions archiveOptions = new ArchiveOptions(archiveInput, page, pageNumber);
+                        archiveOptions.load();
+                    }
+
+                    archiveInput = "";
+                    userInput = "";
                     break;
                 case "0":
                     Menu.exit();
@@ -85,6 +105,10 @@ public class EntryPoint {
                     break;
             }
         }
+    }
+
+    public static void setPageNumber(Integer pageNumber) {
+        EntryPoint.pageNumber = pageNumber;
     }
 
     public static String getApiPage() {
