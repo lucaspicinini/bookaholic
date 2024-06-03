@@ -2,8 +2,11 @@ package br.com.bookaholic.utils;
 
 import br.com.bookaholic.entry.EntryPoint;
 import br.com.bookaholic.model.Book;
+import br.com.bookaholic.model.BookData;
 import br.com.bookaholic.model.DataIndex;
 import br.com.bookaholic.repository.BookRepository;
+import br.com.bookaholic.service.ApiService;
+import br.com.bookaholic.service.Mapper;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
@@ -11,6 +14,8 @@ import java.util.Scanner;
 
 public class CatalogueOptions {
     private final Scanner scanner = new Scanner(System.in);
+    private final ApiService apiService = new ApiService();
+    private final Mapper mapper = new Mapper();
     private final DataIndex dataIndex;
     private final String userOption;
     private final List<Book> books;
@@ -56,15 +61,44 @@ public class CatalogueOptions {
                 break;
             case "4":
                 ScreenClear.clear();
-                System.out.println("Salvando livros...\n");
+                Menu.saving();
+
                 try {
                     bookRepository.saveAll(this.books);
-                    System.out.println("Livros salvos com sucesso!\n");
+                    Menu.saved();
                 } catch (DataIntegrityViolationException e) {
-                    System.out.println("Esses livros já foram salvos anteriormente!\n");
+                    Menu.alreadySaved();
                 }
+
                 break;
             case "5":
+                Menu.askId();
+                String bookId = scanner.nextLine();
+                ScreenClear.clear();
+                Menu.connecting();
+                String responseBody = apiService
+                        .getResponseBody("https://gutendex.com/books/" + bookId + "/");
+
+                if (responseBody != null) {
+                    BookData bookDataById = mapper.getClassFromJson(responseBody, BookData.class);
+                    ScreenClear.clear();
+
+                    if (bookDataById.invalidPage() == null) {
+                        Book bookById = new Book(bookDataById);
+                        Menu.saving();
+
+                        try {
+                            bookRepository.save(bookById);
+                            Menu.saved();
+                        } catch (DataIntegrityViolationException e) {
+                            Menu.alreadySaved();
+                        }
+
+                    } else {
+                        Menu.notFound();
+                    }
+
+                }
                 break;
             case "0":
                 EntryPoint.setUserInput("");
