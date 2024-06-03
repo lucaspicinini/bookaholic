@@ -2,6 +2,7 @@ package br.com.bookaholic.entry;
 
 import br.com.bookaholic.model.Book;
 import br.com.bookaholic.model.DataIndex;
+import br.com.bookaholic.repository.BookRepository;
 import br.com.bookaholic.utils.Catalogue;
 import br.com.bookaholic.utils.Menu;
 import br.com.bookaholic.service.ApiService;
@@ -15,11 +16,17 @@ public class EntryPoint {
     private final Scanner scanner = new Scanner(System.in);
     private final ApiService apiService = new ApiService();
     private final Mapper mapper = new Mapper();
+    private final BookRepository bookRepository;
     private static DataIndex dataIndex;
     private static Integer apiPageNumber = 1;
     private static String apiPage = String.valueOf(apiPageNumber);
     private static String userInput = "";
     private String responseBody;
+
+
+    public EntryPoint(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     public void init() {
         ScreenClear.clear();
@@ -41,7 +48,7 @@ public class EntryPoint {
                     
                     if (responseBody != null) {
                         dataIndex = mapper.getClassFromJson(responseBody, DataIndex.class);
-                        Catalogue catalogue = new Catalogue(dataIndex);
+                        Catalogue catalogue = new Catalogue(dataIndex, bookRepository);
                         catalogue.load();
                     }
                     

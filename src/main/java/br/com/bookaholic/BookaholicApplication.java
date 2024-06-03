@@ -1,12 +1,16 @@
 package br.com.bookaholic;
 
 import br.com.bookaholic.entry.EntryPoint;
+import br.com.bookaholic.repository.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class BookaholicApplication implements CommandLineRunner {
+	@Autowired
+	private BookRepository bookRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BookaholicApplication.class, args);
@@ -15,7 +19,7 @@ public class BookaholicApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		try {
-			EntryPoint entryPoint = new EntryPoint();
+			EntryPoint entryPoint = new EntryPoint(bookRepository);
 			entryPoint.init();
 		} catch (Exception e) {
             throw new Exception(e);
