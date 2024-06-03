@@ -1,18 +1,32 @@
 package br.com.bookaholic.model;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
+@Table(name = "livros")
 public class Book {
-    private final Integer id;
-    private final String title;
-    private final Boolean copyright;
-    private final String copyrightText;
-    private final Integer downloadCount;
-    private final List<String> subjects;
-    private final List<Author> authors;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(unique = true, nullable = false)
+    private Integer idBook;
+    @Column(nullable = false, length = 510)
+    private String title;
+    private Boolean copyright;
+    @Transient
+    private String copyrightText;
+    private Integer downloadCount;
+    @Transient
+    private List<String> subjects;
+    @Transient
+    private List<Author> authors;
+
+    protected Book() {}
 
     public Book(BookData book) {
-        this.id = book.id();
+        this.idBook = book.idBook();
         this.title = book.title();
         this.copyright = book.copyright();
         this.copyrightText = this.copyright ? "Sim" : "Não";
@@ -23,7 +37,7 @@ public class Book {
 
     public void printBook() {
         System.out.println("**** Livro: " + this.title + " ****");
-        System.out.println("--- Id: " + this.id);
+        System.out.println("--- Id: " + this.idBook);
         this.authors.forEach(author -> System.out.println("--- Autores: " + author.getName()));
         System.out.println("--- Possui copyright? " + this.copyrightText);
         System.out.println("--- Número de downloads: " + this.downloadCount);
@@ -32,8 +46,8 @@ public class Book {
         System.out.println();
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdBook() {
+        return idBook;
     }
 
     public String getTitle() {
