@@ -15,7 +15,6 @@ public class Book {
     @Column(nullable = false, length = 510)
     private String title;
     private Boolean copyright;
-    @Transient
     private String copyrightText;
     private Integer downloadCount;
     @Transient
@@ -36,13 +35,17 @@ public class Book {
     }
 
     public void printBook() {
-        System.out.println("**** Livro: " + this.title + " ****");
-        System.out.println("--- Id: " + this.idBook);
-        this.authors.forEach(author -> System.out.println("--- Autores: " + author.getName()));
-        System.out.println("--- Possui copyright? " + this.copyrightText);
-        System.out.println("--- Número de downloads: " + this.downloadCount);
+        System.out.println("**** Livro: " + title + " ****");
+        System.out.println("--- Id: " + idBook);
+        if (authors != null) {
+            authors.forEach(author -> System.out.println("--- Autores: " + author.getName()));
+        }
+        System.out.println("--- Possui copyright? " + copyrightText);
+        System.out.println("--- Número de downloads: " + downloadCount);
         System.out.println("--- Temas: ");
-        this.subjects.forEach(subject -> System.out.println("+ " + subject));
+        if (subjects != null) {
+            subjects.forEach(subject -> System.out.println("+ " + subject));
+        }
         System.out.println();
     }
 
