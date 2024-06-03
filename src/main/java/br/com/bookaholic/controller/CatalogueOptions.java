@@ -1,4 +1,4 @@
-package br.com.bookaholic.utils;
+package br.com.bookaholic.controller;
 
 import br.com.bookaholic.entry.EntryPoint;
 import br.com.bookaholic.model.Book;
@@ -7,8 +7,11 @@ import br.com.bookaholic.model.DataIndex;
 import br.com.bookaholic.repository.BookRepository;
 import br.com.bookaholic.service.ApiService;
 import br.com.bookaholic.service.Mapper;
+import br.com.bookaholic.utils.Menu;
+import br.com.bookaholic.utils.ScreenClear;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -53,11 +56,17 @@ public class CatalogueOptions {
                 break;
             case "3":
                 Menu.askPage();
-                apiPageNumber = scanner.nextInt();
-                scanner.nextLine();
-                apiPage = String.valueOf(apiPageNumber).trim();
-                EntryPoint.setApiPageNumber(apiPageNumber);
-                EntryPoint.setApiPage(apiPage);
+
+                try {
+                    apiPageNumber = scanner.nextInt();
+                    scanner.nextLine();
+                    apiPage = String.valueOf(apiPageNumber).trim();
+                    EntryPoint.setApiPageNumber(apiPageNumber);
+                    EntryPoint.setApiPage(apiPage);
+                } catch (InputMismatchException e) {
+                    System.out.println("A busca deve ser por número.");
+                    break;
+                }
                 break;
             case "4":
                 ScreenClear.clear();

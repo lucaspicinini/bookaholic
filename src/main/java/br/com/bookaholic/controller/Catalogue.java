@@ -1,9 +1,11 @@
-package br.com.bookaholic.utils;
+package br.com.bookaholic.controller;
 
 import br.com.bookaholic.entry.EntryPoint;
 import br.com.bookaholic.model.Book;
 import br.com.bookaholic.model.DataIndex;
 import br.com.bookaholic.repository.BookRepository;
+import br.com.bookaholic.utils.Menu;
+import br.com.bookaholic.utils.ScreenClear;
 
 import java.util.List;
 import java.util.Scanner;
