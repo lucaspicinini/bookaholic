@@ -94,6 +94,7 @@ public class CatalogueOptions {
                             Menu.alreadySaved();
                         }
 
+                        bookById.printBook();
                     } else {
                         Menu.notFound();
                     }
