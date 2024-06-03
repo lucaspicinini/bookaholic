@@ -8,8 +8,9 @@ public class Menu {
             ***** Bookaholic *****
             
             +++ Escolha uma opção:
-            1 - Exibir catálogo
+            1 - Exibir catálogo online
             2 - Buscar por título ou autor
+            3 - Consultar livros salvos
             0 - Sair
             """;
     private static final String catalogueMenu = """

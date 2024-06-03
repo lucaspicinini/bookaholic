@@ -73,6 +73,8 @@ public class EntryPoint {
                     userInput = scanner.nextLine();
                     ScreenClear.clear();
                     break;
+                case "3":
+                    break;
                 case "0":
                     Menu.exit();
                     exitLoop = true;
