@@ -43,7 +43,7 @@ public class EntryPoint {
                 case "1":
                     Menu.connecting();
                     responseBody = apiService
-                            .getResponseBody("https://gutendex.com/books/?languages=pt&page=" + apiPage);
+                            .getResponseBody("https://gutendex.com/books/?languages=pt,en&page=" + apiPage);
                     
                     if (responseBody != null) {
                         dataIndex = mapper.getClassFromJson(responseBody, DataIndex.class);
@@ -56,7 +56,7 @@ public class EntryPoint {
                     Menu.askName();
                     String apiSearchName = scanner.nextLine().replace(" ", "%20").toLowerCase();
                     responseBody = apiService
-                            .getResponseBody("https://gutendex.com/books/?languages=pt&search=" + apiSearchName);
+                            .getResponseBody("https://gutendex.com/books/?languages=pt,en&search=" + apiSearchName);
                     dataIndex = mapper.getClassFromJson(responseBody, DataIndex.class);
                     Search search = new Search(bookRepository);
                     search.load();
