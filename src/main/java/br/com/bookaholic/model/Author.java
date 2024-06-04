@@ -2,6 +2,7 @@ package br.com.bookaholic.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,7 @@ public class Author {
     private String birthYear;
     private String deathYear;
     @ManyToMany(mappedBy = "authors")
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
 
     public Author() {}
 
@@ -26,5 +27,9 @@ public class Author {
 
     public String getName() {
         return name;
+    }
+
+    public void setBooks(Book book) {
+        this.books.add(book);
     }
 }

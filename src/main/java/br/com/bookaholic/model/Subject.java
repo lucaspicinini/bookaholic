@@ -10,6 +10,7 @@ public class Subject {
     private Long id;
     private String name;
     @ManyToOne
+    @JoinColumn(name = "book_id")
     private Book book;
 
     public Subject() {}
@@ -20,5 +21,9 @@ public class Subject {
 
     public String getName() {
         return name;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
     }
 }

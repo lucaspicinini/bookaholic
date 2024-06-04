@@ -17,9 +17,9 @@ public class Book {
     private Boolean copyright;
     private String copyrightText;
     private Integer downloadCount;
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Subject> subjects;
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Author> authors;
 
     protected Book() {}
@@ -31,7 +31,9 @@ public class Book {
         this.copyrightText = this.copyright ? "Sim" : "Não";
         this.downloadCount = book.downloadCount();
         this.subjects = book.subjects().stream().map(Subject::new).toList();
+        this.subjects.forEach(subject -> subject.setBook(this));
         this.authors = book.authors().stream().map(Author::new).toList();
+        this.authors.forEach(author -> author.setBooks(this));
     }
 
     public void printBook() {
