@@ -1,9 +1,22 @@
 package br.com.bookaholic.model;
 
+import jakarta.persistence.*;
+
+import java.util.List;
+
+@Entity
+@Table(name = "autores")
 public class Author {
-    private final String name;
-    private final String birthYear;
-    private final String deathYear;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String birthYear;
+    private String deathYear;
+    @ManyToMany(mappedBy = "authors")
+    private List<Book> books;
+
+    public Author() {}
 
     public Author(AuthorData author) {
         this.name = author.name();
@@ -13,13 +26,5 @@ public class Author {
 
     public String getName() {
         return name;
-    }
-
-    public String getBirthYear() {
-        return birthYear;
-    }
-
-    public String getDeathYear() {
-        return deathYear;
     }
 }

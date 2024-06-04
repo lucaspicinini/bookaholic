@@ -17,9 +17,9 @@ public class Book {
     private Boolean copyright;
     private String copyrightText;
     private Integer downloadCount;
-    @Transient
-    private List<String> subjects;
-    @Transient
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<Subject> subjects;
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Author> authors;
 
     protected Book() {}
@@ -30,7 +30,7 @@ public class Book {
         this.copyright = book.copyright();
         this.copyrightText = this.copyright ? "Sim" : "Não";
         this.downloadCount = book.downloadCount();
-        this.subjects = book.subjects();
+        this.subjects = book.subjects().stream().map(Subject::new).toList();
         this.authors = book.authors().stream().map(Author::new).toList();
     }
 
@@ -38,38 +38,15 @@ public class Book {
         System.out.println("**** Livro: " + title + " ****");
         System.out.println("--- Id: " + idBook);
         if (authors != null) {
-            authors.forEach(author -> System.out.println("--- Autores: " + author.getName()));
+            System.out.println("--- Autores: ");
+            authors.forEach(author -> System.out.println("+ " + author.getName()));
         }
         System.out.println("--- Possui copyright? " + copyrightText);
         System.out.println("--- Número de downloads: " + downloadCount);
-        System.out.println("--- Temas: ");
         if (subjects != null) {
-            subjects.forEach(subject -> System.out.println("+ " + subject));
+            System.out.println("--- Temas: ");
+            subjects.forEach(subject -> System.out.println("+ " + subject.getName()));
         }
         System.out.println();
-    }
-
-    public Integer getIdBook() {
-        return idBook;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Boolean getCopyright() {
-        return copyright;
-    }
-
-    public Integer getDownloadCount() {
-        return downloadCount;
-    }
-
-    public List<String> getSubjects() {
-        return subjects;
-    }
-
-    public List<Author> getAuthors() {
-        return authors;
     }
 }
