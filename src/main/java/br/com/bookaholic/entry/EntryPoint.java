@@ -1,7 +1,9 @@
 package br.com.bookaholic.entry;
 
 import br.com.bookaholic.controller.ArchiveOptions;
+import br.com.bookaholic.controller.SearchOptions;
 import br.com.bookaholic.model.Book;
+import br.com.bookaholic.model.BookData;
 import br.com.bookaholic.model.DataIndex;
 import br.com.bookaholic.repository.BookRepository;
 import br.com.bookaholic.controller.Catalogue;
@@ -9,6 +11,7 @@ import br.com.bookaholic.utils.Menu;
 import br.com.bookaholic.service.ApiService;
 import br.com.bookaholic.service.Mapper;
 import br.com.bookaholic.utils.ScreenClear;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -69,14 +72,15 @@ public class EntryPoint {
                         ScreenClear.clear();
                         List<Book> books = dataIndex.books().stream().map(Book::new).toList();
                         books.forEach(Book::printBook);
+                        Menu.searchMenu();
+                        String searchMenuOption = scanner.nextLine();
+                        SearchOptions searchOptions = new SearchOptions(searchMenuOption, bookRepository, books);
+                        searchOptions.checkOption();
                     } else {
                         ScreenClear.clear();
                         Menu.notFound();
                     }
 
-                    Menu.mainMenu();
-                    userInput = scanner.nextLine();
-                    ScreenClear.clear();
                     break;
                 case "3":
                     while (!archiveInput.equals("0")) {
@@ -89,7 +93,7 @@ public class EntryPoint {
                         archiveInput = scanner.nextLine();
                         ScreenClear.clear();
                         ArchiveOptions archiveOptions = new ArchiveOptions(archiveInput, page, pageNumber);
-                        archiveOptions.load();
+                        archiveOptions.checkOption();
                     }
 
                     archiveInput = "";

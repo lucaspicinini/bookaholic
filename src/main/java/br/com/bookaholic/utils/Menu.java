@@ -15,6 +15,12 @@ public class Menu {
             3 - Consultar livros salvos
             0 - Sair
             """;
+    private static final String searchMenu = """
+            +++ Escolha uma opção:
+            1 - Salvar todos os livros desta página
+            2 - Salvar livro por id
+            0 - Voltar ao menu principal
+            """;
     private static final String catalogueMenu = """
             +++ Menu do Catálogo:
             
@@ -36,6 +42,10 @@ public class Menu {
     // EntryPoint
     public static void mainMenu() {
         System.out.println(mainMenu);
+    }
+    // EntryPoint
+    public static void searchMenu() {
+        System.out.println(searchMenu);
     }
     // EntryPoint
     public static void archiveMenu() { System.out.println(archiveMenu); }
