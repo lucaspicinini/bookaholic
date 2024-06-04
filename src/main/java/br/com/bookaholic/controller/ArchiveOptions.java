@@ -1,6 +1,5 @@
 package br.com.bookaholic.controller;
 
-import br.com.bookaholic.entry.EntryPoint;
 import br.com.bookaholic.model.Book;
 import br.com.bookaholic.utils.Menu;
 import br.com.bookaholic.utils.ScreenClear;

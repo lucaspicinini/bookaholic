@@ -1,10 +1,5 @@
 package br.com.bookaholic.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 public class Author {
     private final String name;
     private final String birthYear;
