@@ -21,7 +21,7 @@ public class ArchiveOptions {
         this.pageNumber = pageNumber;
     }
 
-    public void load() {
+    public void checkOption() {
         switch (archiveInput) {
             case "1":
                 if (!page.isFirst()) {
