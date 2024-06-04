@@ -1,5 +1,8 @@
 package br.com.bookaholic.service;
 
+import br.com.bookaholic.entry.EntryPoint;
+import br.com.bookaholic.utils.ScreenClear;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -15,7 +18,9 @@ public class ApiService {
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
+            ScreenClear.clear();
             System.out.println("Não foi possível estabelecer a conexão.");
+            EntryPoint.setUserInput("");
         }
 
         String responseBody = response != null ? response.body() : null;
