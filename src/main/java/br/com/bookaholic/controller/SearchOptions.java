@@ -5,6 +5,7 @@ import br.com.bookaholic.model.Book;
 import br.com.bookaholic.repository.BookRepository;
 import br.com.bookaholic.service.ApiService;
 import br.com.bookaholic.service.Mapper;
+import br.com.bookaholic.utils.CheckNullResponseBody;
 import br.com.bookaholic.utils.Menu;
 import br.com.bookaholic.utils.ScreenClear;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -49,7 +50,7 @@ public class SearchOptions {
                 Menu.connecting();
                 String responseBody = apiService
                         .getResponseBody("https://gutendex.com/books/" + bookId + "/");
-                EntryPoint.checkNullResponseBody(responseBody, mapper, bookRepository);
+                CheckNullResponseBody.check(responseBody, mapper, bookRepository);
                 EntryPoint.setUserInput("");
                 break;
             case "0":
