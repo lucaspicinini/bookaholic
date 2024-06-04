@@ -26,13 +26,13 @@ public class ArchiveOptions {
             case "1":
                 if (!page.isFirst()) {
                     pageNumber--;
-                    EntryPoint.setPageNumber(pageNumber);
+                    Archive.setPageNumber(pageNumber);
                 }
                 break;
             case "2":
                 if (!page.isLast()) {
                     pageNumber++;
-                    EntryPoint.setPageNumber(pageNumber);
+                    Archive.setPageNumber(pageNumber);
                 }
                 break;
             case "3":
@@ -46,7 +46,7 @@ public class ArchiveOptions {
                         scanner.nextLine();
 
                         if (pageNumber >= 1 && pageNumber <= page.getTotalPages()) {
-                            EntryPoint.setPageNumber(pageNumber);
+                            Archive.setPageNumber(pageNumber);
                             checkOption = true;
                             ScreenClear.clear();
                         } else {
