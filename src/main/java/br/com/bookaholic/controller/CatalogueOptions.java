@@ -73,7 +73,7 @@ public class CatalogueOptions {
                 Menu.saving();
 
                 try {
-                    bookRepository.saveAll(this.books);
+                    bookRepository.saveAll(books);
                     Menu.saved();
                 } catch (DataIntegrityViolationException e) {
                     Menu.alreadySaved();
@@ -87,28 +87,7 @@ public class CatalogueOptions {
                 Menu.connecting();
                 String responseBody = apiService
                         .getResponseBody("https://gutendex.com/books/" + bookId + "/");
-
-                if (responseBody != null) {
-                    BookData bookDataById = mapper.getClassFromJson(responseBody, BookData.class);
-                    ScreenClear.clear();
-
-                    if (bookDataById.invalidPage() == null) {
-                        Book bookById = new Book(bookDataById);
-                        Menu.saving();
-
-                        try {
-                            bookRepository.save(bookById);
-                            Menu.saved();
-                        } catch (DataIntegrityViolationException e) {
-                            Menu.alreadySaved();
-                        }
-
-                        bookById.printBook();
-                    } else {
-                        Menu.notFound();
-                    }
-
-                }
+                EntryPoint.checkNullResponseBody(responseBody, mapper, bookRepository);
                 break;
             case "0":
                 EntryPoint.setUserInput("");
