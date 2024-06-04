@@ -1,8 +1,7 @@
 package br.com.bookaholic.entry;
 
 import br.com.bookaholic.controller.Archive;
-import br.com.bookaholic.controller.SearchOptions;
-import br.com.bookaholic.model.Book;
+import br.com.bookaholic.controller.Search;
 import br.com.bookaholic.model.DataIndex;
 import br.com.bookaholic.repository.BookRepository;
 import br.com.bookaholic.controller.Catalogue;
@@ -11,7 +10,6 @@ import br.com.bookaholic.service.ApiService;
 import br.com.bookaholic.service.Mapper;
 import br.com.bookaholic.utils.ScreenClear;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class EntryPoint {
@@ -60,20 +58,8 @@ public class EntryPoint {
                     responseBody = apiService
                             .getResponseBody("https://gutendex.com/books/?languages=pt&search=" + apiSearchName);
                     dataIndex = mapper.getClassFromJson(responseBody, DataIndex.class);
-                    
-                    if (!dataIndex.books().isEmpty()) {
-                        ScreenClear.clear();
-                        List<Book> books = dataIndex.books().stream().map(Book::new).toList();
-                        books.forEach(Book::printBook);
-                        Menu.searchMenu();
-                        String searchMenuOption = scanner.nextLine();
-                        SearchOptions searchOptions = new SearchOptions(searchMenuOption, bookRepository, books);
-                        searchOptions.checkOption();
-                    } else {
-                        ScreenClear.clear();
-                        Menu.notFound();
-                    }
-
+                    Search search = new Search(bookRepository);
+                    search.load();
                     break;
                 case "3":
                     Archive archive = new Archive(bookRepository);
