@@ -1,9 +1,8 @@
 package br.com.bookaholic.entry;
 
-import br.com.bookaholic.controller.ArchiveOptions;
+import br.com.bookaholic.controller.Archive;
 import br.com.bookaholic.controller.SearchOptions;
 import br.com.bookaholic.model.Book;
-import br.com.bookaholic.model.BookData;
 import br.com.bookaholic.model.DataIndex;
 import br.com.bookaholic.repository.BookRepository;
 import br.com.bookaholic.controller.Catalogue;
@@ -11,10 +10,6 @@ import br.com.bookaholic.utils.Menu;
 import br.com.bookaholic.service.ApiService;
 import br.com.bookaholic.service.Mapper;
 import br.com.bookaholic.utils.ScreenClear;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Scanner;
@@ -28,8 +23,6 @@ public class EntryPoint {
     private static Integer apiPageNumber = 1;
     private static String apiPage = String.valueOf(apiPageNumber);
     private static String userInput = "";
-    private static String archiveInput = "";
-    private static Integer pageNumber = 1;
     private String responseBody;
 
     public EntryPoint(BookRepository bookRepository) {
@@ -83,20 +76,8 @@ public class EntryPoint {
 
                     break;
                 case "3":
-                    while (!archiveInput.equals("0")) {
-                        Pageable pageable = PageRequest.of(pageNumber - 1, 10);
-                        Page<Book> page = bookRepository.findAll(pageable);
-                        page.forEach(Book::printBook);
-                        Menu.archiveMenu();
-                        Menu.archiveMenuInfo(pageNumber, page);
-                        Menu.askOption();
-                        archiveInput = scanner.nextLine();
-                        ScreenClear.clear();
-                        ArchiveOptions archiveOptions = new ArchiveOptions(archiveInput, page, pageNumber);
-                        archiveOptions.checkOption();
-                    }
-
-                    archiveInput = "";
+                    Archive archive = new Archive(bookRepository);
+                    archive.load();
                     userInput = "";
                     break;
                 case "0":
@@ -109,34 +90,6 @@ public class EntryPoint {
                     break;
             }
         }
-    }
-
-    public static void checkNullResponseBody(String responseBody, Mapper mapper, BookRepository bookRepository) {
-        if (responseBody != null) {
-            BookData bookDataById = mapper.getClassFromJson(responseBody, BookData.class);
-            ScreenClear.clear();
-
-            if (bookDataById.invalidPage() == null) {
-                Book bookById = new Book(bookDataById);
-                Menu.saving();
-
-                try {
-                    bookRepository.save(bookById);
-                    Menu.saved();
-                } catch (DataIntegrityViolationException e) {
-                    Menu.alreadySaved();
-                }
-
-                bookById.printBook();
-            } else {
-                Menu.notFound();
-            }
-
-        }
-    }
-
-    public static void setPageNumber(Integer pageNumber) {
-        EntryPoint.pageNumber = pageNumber;
     }
 
     public static String getApiPage() {
