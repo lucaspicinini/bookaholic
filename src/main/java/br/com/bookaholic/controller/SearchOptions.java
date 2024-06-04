@@ -58,6 +58,7 @@ public class SearchOptions {
                 EntryPoint.setUserInput("");
                 break;
             default:
+                ScreenClear.clear();
                 Menu.invalidOption();
                 break;
         }

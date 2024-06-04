@@ -49,6 +49,7 @@ public class ArchiveOptions {
                             checkOption = true;
                             ScreenClear.clear();
                         } else {
+                            ScreenClear.clear();
                             Menu.invalidPage(page);
                         }
 
