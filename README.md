@@ -77,7 +77,7 @@ If you have any questions about something else or about a Pull Request, open an 
 
 #### License
 
-* see [LICENSE](https://github.com/lucaspicinini/bookaholic/LICENSE) file
+* see [LICENSE](https://github.com/lucaspicinini/bookaholic/blob/main/LICENSE) file
 
 #### Versions
 
