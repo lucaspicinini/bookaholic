@@ -1,37 +1,41 @@
 package br.com.bookaholic.controller;
 
-import br.com.bookaholic.model.Book;
+import br.com.bookaholic.model.Author;
+import br.com.bookaholic.repository.AuthorRepository;
 import br.com.bookaholic.utils.Menu;
 import br.com.bookaholic.utils.ScreenClear;
 import org.springframework.data.domain.Page;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
-public class ArchiveOptions {
+public class AuthorArchiveOptions {
     private final Scanner scanner = new Scanner(System.in);
-    private String archiveInput;
+    private final AuthorRepository authorRepository;
+    private String authorInput;
     private Integer pageNumber;
-    private Page<Book> page;
+    private Page<Author> page;
 
-    public ArchiveOptions(String archiveInput, Page<Book> page, Integer pageNumber) {
-        this.archiveInput = archiveInput;
+    public AuthorArchiveOptions(AuthorRepository authorRepository, String authorInput, Page<Author> page, Integer pageNumber) {
+        this.authorRepository = authorRepository;
+        this.authorInput = authorInput;
         this.page = page;
         this.pageNumber = pageNumber;
     }
 
     public void checkOption() {
-        switch (archiveInput) {
+        switch (authorInput) {
             case "1":
                 if (!page.isFirst()) {
                     pageNumber--;
-                    Archive.setPageNumber(pageNumber);
+                    AuthorArchive.setPageNumber(pageNumber);
                 }
                 break;
             case "2":
                 if (!page.isLast()) {
                     pageNumber++;
-                    Archive.setPageNumber(pageNumber);
+                    AuthorArchive.setPageNumber(pageNumber);
                 }
                 break;
             case "3":
@@ -45,7 +49,7 @@ public class ArchiveOptions {
                         scanner.nextLine();
 
                         if (pageNumber >= 1 && pageNumber <= page.getTotalPages()) {
-                            Archive.setPageNumber(pageNumber);
+                            AuthorArchive.setPageNumber(pageNumber);
                             checkOption = true;
                             ScreenClear.clear();
                         } else {
@@ -60,14 +64,34 @@ public class ArchiveOptions {
 
                 }
                 break;
+            case "4":
+                boolean exitYearSearch = false;
+
+                while (!exitYearSearch) {
+                    System.out.println("Informe o ano para busca: ");
+
+                    try {
+                        Integer year = scanner.nextInt();
+                        scanner.close();
+                        List<Author> authorsAlive = authorRepository.findAuthorsAliveInYear(year);
+                        authorsAlive.forEach(Author::printAuthor);
+                        AuthorArchive.setAuthorInput("0");
+                        exitYearSearch = true;
+                    } catch (InputMismatchException e) {
+                        Menu.invalidOption();
+                        break;
+                    }
+
+                }
+
+                break;
             case "0":
-                Archive.setPageNumber(1);
-                archiveInput = "0";
+                AuthorArchive.setPageNumber(1);
+                authorInput = "0";
                 break;
             default:
                 Menu.invalidOption();
                 break;
         }
     }
-
 }

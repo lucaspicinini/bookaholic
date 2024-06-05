@@ -36,6 +36,10 @@ public class Book {
         this.authors.forEach(author -> author.setBooks(this));
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public void printBook() {
         System.out.println("**** Livro: " + title + " ****");
         System.out.println("--- Id: " + idBook);

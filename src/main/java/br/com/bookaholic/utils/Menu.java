@@ -1,6 +1,7 @@
 package br.com.bookaholic.utils;
 
 import br.com.bookaholic.entry.EntryPoint;
+import br.com.bookaholic.model.Author;
 import br.com.bookaholic.model.Book;
 import org.springframework.data.domain.Page;
 
@@ -10,13 +11,16 @@ public class Menu {
             ***** Bookaholic *****
             
             +++ Escolha uma opção:
+            
             1 - Exibir catálogo online
-            2 - Buscar por título ou autor
-            3 - Consultar livros salvos
+            2 - Buscar por título/autor no catálogo online
+            3 - Consultar livros salvos no banco de dados
+            4 - Consultar autores salvos no banco de dados
             0 - Sair
             """;
     private static final String searchMenu = """
-            +++ Escolha uma opção:
+            +++ Menu da Busca por Título/Autor:
+            
             1 - Salvar todos os livros desta página
             2 - Salvar livro por id
             0 - Voltar ao menu principal
@@ -32,12 +36,31 @@ public class Menu {
             0 - Voltar ao menu principal
             """;
     private static final String archiveMenu = """
-            +++ Escolha uma opção:
+            +++ Menu do Banco de Dados:
+            
             1 - Página anterior
             2 - Pŕoxima página
             3 - Buscar pelo número da página
             0 - Voltar ao menu principal
             """;
+    private static final String authorMenu = """
+            +++ Menu do Banco de Dados:
+            
+            1 - Página anterior
+            2 - Pŕoxima página
+            3 - Buscar pelo número da página
+            4 - Filtrar autores vivos em determinado ano
+            0 - Voltar ao menu principal
+            """;
+
+    public static void authorMenu() { System.out.println(authorMenu); }
+
+    public static void authorMenuInfo (int pageNumber, Page<Author> page) {
+        System.out.println("Exibindo página " + pageNumber + " de " + page.getTotalPages());
+        System.out.println("Autores nesta página: " + page.getNumberOfElements());
+        System.out.println("Total de Autores Armazenados: " + page.getTotalElements() + "\n");
+    }
+
 
     // EntryPoint
     public static void mainMenu() {
@@ -57,11 +80,13 @@ public class Menu {
     public static void exit() { System.out.println("Até a próxima :) ...\n"); }
     // EntryPoint
     public static void archiveMenuInfo (int pageNumber, Page<Book> page) {
-        System.out.println("\nExibindo página " + pageNumber + " de " + page.getTotalPages());
+        System.out.println("Exibindo página " + pageNumber + " de " + page.getTotalPages());
         System.out.println("Livros nesta página: " + page.getNumberOfElements());
         System.out.println("Total de Livros Armazenados: " + page.getTotalElements() + "\n");
     }
-    public static void invalidPage (Page<Book> page) {
+
+    // ArchiveOptions
+    public static <T> void invalidPage (Page<T> page) {
         System.out.println("Digite uma página entre 1 e " + page.getTotalPages() + ".");
     }
 
@@ -82,9 +107,7 @@ public class Menu {
     public static void alreadySaved() { System.out.println("Livro/Livros já armazenado(s) anteriormente!\n"); }
 
     // EntryPoint and Catalogue
-    public static void catalogueMenu() {
-        System.out.println(catalogueMenu);
-    }
+    public static void catalogueMenu() { System.out.println(catalogueMenu); }
     // EntryPoint and CatalogueOptions
     public static void connecting() { System.out.println("Estabelecendo conexão...\n"); }
     // EntryPoint and CatalogueOptions
