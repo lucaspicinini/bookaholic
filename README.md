@@ -6,7 +6,7 @@
 
 <p align="center">A challenge from class 6 of ONE.</p>
 
-Preview on YouTube
+Preview on YouTube by clicking below:
 --------
 
 <p align="center">
