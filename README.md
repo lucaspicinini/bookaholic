@@ -9,7 +9,7 @@
 Preview on YouTube by clicking below:
 --------
 
-<p align="center">
+<p>
   <a href="https://www.youtube.com/watch?v=3OggnEJ_Frc">
     <img src="https://img.youtube.com/vi/3OggnEJ_Frc/0.jpg" alt="Watch on YouTube" />
   </a>
