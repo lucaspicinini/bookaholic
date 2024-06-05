@@ -31,18 +31,26 @@ Requirements
 - Maven
 - Postgres
 
-Install
+Install and Run
 -------------------
 
 Clone the repository to your machine:
 
     git clone https://github.com/lucaspicinini/bookaholic.git
 
-Navigate to the project folder:
+Navigate to the project directory:
 
     cd bookaholic
 
-Install the project dependencies using Maven:
+Set your environment variables in the `application.properties` file:
+
+    cd bookaholic/src/main/resources && ls
+
+Go to the project directory again...
+
+    cd bookaholic
+
+and install the dependencies using this Maven command:
 
     mvn clean install
 
