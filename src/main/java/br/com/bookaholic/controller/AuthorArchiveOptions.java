@@ -72,9 +72,13 @@ public class AuthorArchiveOptions {
 
                     try {
                         Integer year = scanner.nextInt();
-                        scanner.close();
+                        scanner.nextLine();
                         List<Author> authorsAlive = authorRepository.findAuthorsAliveInYear(year);
-                        authorsAlive.forEach(Author::printAuthor);
+                        if (!authorsAlive.isEmpty()) {
+                            authorsAlive.forEach(Author::printAuthor);
+                        } else {
+                            System.out.println("Nenhum autor armazenado vivo em " + year + "!");
+                        }
                         AuthorArchive.setAuthorInput("0");
                         exitYearSearch = true;
                     } catch (InputMismatchException e) {
