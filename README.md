@@ -38,10 +38,6 @@ Clone the repository to your machine:
 
     git clone https://github.com/lucaspicinini/bookaholic.git
 
-Navigate to the project directory:
-
-    cd bookaholic
-
 Set your environment variables in the `application.properties` file:
 
     cd bookaholic/src/main/resources && ls
