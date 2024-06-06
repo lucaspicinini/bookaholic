@@ -90,6 +90,36 @@ public class CatalogueOptions {
                         .getResponseBody("https://gutendex.com/books/" + bookId + "/");
                 CheckNullResponseBody.check(responseBody, mapper, bookRepository);
                 break;
+            case "6":
+                Menu.askOption();
+                Menu.askLanguage();
+                String langOption = scanner.nextLine();
+                ScreenClear.clear();
+
+                switch (langOption) {
+                    case "1":
+                        EntryPoint.setLangEn("en");
+                        EntryPoint.setLangPt("");
+                        break;
+                    case "2":
+                        EntryPoint.setLangEn("");
+                        EntryPoint.setLangPt("pt");
+                        break;
+                    case "3":
+                        EntryPoint.setLangEn("en");
+                        EntryPoint.setLangPt("pt");
+                        break;
+                    case "0":
+                        Menu.backToCatalogue();
+                        break;
+                    default:
+                        EntryPoint.setLangEn("en");
+                        EntryPoint.setLangPt("pt");
+                        Menu.invalidOption();
+                        break;
+                }
+
+                break;
             case "0":
                 EntryPoint.setUserInput("");
                 break;

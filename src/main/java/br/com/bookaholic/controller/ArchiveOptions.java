@@ -1,5 +1,6 @@
 package br.com.bookaholic.controller;
 
+import br.com.bookaholic.entry.EntryPoint;
 import br.com.bookaholic.model.Book;
 import br.com.bookaholic.utils.Menu;
 import br.com.bookaholic.utils.ScreenClear;
@@ -59,6 +60,31 @@ public class ArchiveOptions {
                     }
 
                 }
+                break;
+            case "4":
+                Menu.askOption();
+                Menu.askLanguage();
+                String langOption = scanner.nextLine();
+                ScreenClear.clear();
+
+                switch (langOption) {
+                    case "1":
+                        Archive.setLangOption("en");
+                        break;
+                    case "2":
+                        Archive.setLangOption("pt");
+                        break;
+                    case "3":
+                        Archive.setLangOption("all");
+                        break;
+                    case "0":
+                        Menu.backToCatalogue();
+                        break;
+                    default:
+                        Menu.invalidOption();
+                        break;
+                }
+
                 break;
             case "0":
                 Archive.setPageNumber(1);

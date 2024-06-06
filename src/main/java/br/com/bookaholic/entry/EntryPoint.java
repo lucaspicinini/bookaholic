@@ -27,6 +27,9 @@ public class EntryPoint {
     private final AuthorRepository authorRepository;
     private static DataIndex dataIndex;
     private static Integer apiPageNumber = 1;
+    private static String langPt = "pt";
+    private static final String langComma = ",";
+    private static String langEn = "en";
     private static String apiPage = String.valueOf(apiPageNumber);
     private static String userInput = "";
     private String responseBody;
@@ -51,8 +54,11 @@ public class EntryPoint {
             switch (userInput) {
                 case "1":
                     Menu.connecting();
-                    responseBody = apiService
-                            .getResponseBody("https://gutendex.com/books/?languages=pt,en&page=" + apiPage);
+                    responseBody = apiService.getResponseBody(
+                                    "https://gutendex.com/books/?languages=" +
+                                        langPt + langComma + langEn +
+                                        "&page=" + apiPage
+                                    );
                     
                     if (responseBody != null) {
                         dataIndex = mapper.getClassFromJson(responseBody, DataIndex.class);
@@ -92,6 +98,14 @@ public class EntryPoint {
                     break;
             }
         }
+    }
+
+    public static void setLangPt(String langPt) {
+        EntryPoint.langPt = langPt;
+    }
+
+    public static void setLangEn(String langEn) {
+        EntryPoint.langEn = langEn;
     }
 
     public static String getApiPage() {

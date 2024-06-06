@@ -1,5 +1,6 @@
 package br.com.bookaholic.utils;
 
+import br.com.bookaholic.controller.Archive;
 import br.com.bookaholic.entry.EntryPoint;
 import br.com.bookaholic.model.Author;
 import br.com.bookaholic.model.Book;
@@ -13,7 +14,7 @@ public class Menu {
             +++ Escolha uma opção:
             
             1 - Exibir catálogo online
-            2 - Buscar por título/autor no catálogo online
+            2 - Buscar título/autor no catálogo online
             3 - Consultar livros salvos no banco de dados
             4 - Consultar autores salvos no banco de dados
             0 - Sair
@@ -30,25 +31,27 @@ public class Menu {
             
             1 - Página anterior
             2 - Próxima página
-            3 - Buscar página pelo número
+            3 - Buscar página no catálogo
             4 - Salvar todos os livros desta página
             5 - Salvar livro por id
+            6 - Filtrar livros por idioma
             0 - Voltar ao menu principal
             """;
     private static final String archiveMenu = """
-            +++ Menu do Banco de Dados:
+            +++ Livros do Banco de Dados:
             
             1 - Página anterior
             2 - Pŕoxima página
-            3 - Buscar pelo número da página
+            3 - Buscar página no banco de dados
+            4 - Filtrar livros por idioma
             0 - Voltar ao menu principal
             """;
     private static final String authorMenu = """
-            +++ Menu do Banco de Dados:
+            +++ Autores do Banco de Dados:
             
             1 - Página anterior
             2 - Pŕoxima página
-            3 - Buscar pelo número da página
+            3 - Buscar página no banco de dados
             4 - Filtrar autores vivos em determinado ano
             0 - Voltar ao menu principal
             """;
@@ -75,14 +78,21 @@ public class Menu {
     // EntryPoint
     public static void askName() { System.out.println("Digite um nome para busca: "); }
     // EntryPoint
-    public static void askOption() { System.out.println("Selecione uma opção: "); }
-    // EntryPoint
     public static void exit() { System.out.println("Até a próxima :) ...\n"); }
     // EntryPoint
     public static void archiveMenuInfo (int pageNumber, Page<Book> page) {
         System.out.println("Exibindo página " + pageNumber + " de " + page.getTotalPages());
         System.out.println("Livros nesta página: " + page.getNumberOfElements());
-        System.out.println("Total de Livros Armazenados: " + page.getTotalElements() + "\n");
+        System.out.println("Total de Livros Armazenados: " + page.getTotalElements());
+        System.out.println("Exibindo os idiomas: ");
+        if (Archive.getLangOption().equals("en")) {
+            System.out.println("+ Inglês\n");
+        } else if (Archive.getLangOption().equals("pt")) {
+            System.out.println("+ Português\n");
+        } else {
+            System.out.println("+ Inglês");
+            System.out.println("+ Português\n");
+        }
     }
 
     // ArchiveOptions
@@ -94,11 +104,17 @@ public class Menu {
     public static void pageNotFound() { System.out.println("Página: " + EntryPoint.getApiPage() + " não encontrada"); }
     // Catalogue
     public static void page() { System.out.println("***** Página: " + EntryPoint.getApiPage() + " *****\n"); }
-    // Catalogue
-    public static void backToCatalogue() { System.out.println("Voltando ao catálogo...\n"); }
 
     // CatalogueOptions
     public static void askId() { System.out.println("Digite o id do livro: "); }
+    // CatalogueOptions
+    public static void askLanguage() {
+        System.out.println("\n1 - Inglês");
+        System.out.println("2 - Português");
+        System.out.println("3 - Inglês e Português");
+        System.out.println("0 - Voltar");
+    }
+
     // CatalogueOptions
     public static void saving() { System.out.println("Salvando...\n"); }
     // CatalogueOptions
@@ -108,6 +124,10 @@ public class Menu {
 
     // EntryPoint and Catalogue
     public static void catalogueMenu() { System.out.println(catalogueMenu); }
+    // Catalogue and CatalogueOptions
+    public static void backToCatalogue() { System.out.println("Voltando ao catálogo...\n"); }
+    // EntryPoint and CatalogueOptions
+    public static void askOption() { System.out.println("Selecione uma opção: "); }
     // EntryPoint and CatalogueOptions
     public static void connecting() { System.out.println("Estabelecendo conexão...\n"); }
     // EntryPoint and CatalogueOptions
