@@ -28,7 +28,7 @@ public class Catalogue {
         if (this.dataIndex.invalidPage() == null) {
             List<Book> books = this.dataIndex.books().stream().map(Book::new).toList();
             books.forEach(Book::printBook);
-            Menu.page();
+            Menu.pageAndLang();
             Menu.catalogueMenu();
             String userOption = scanner.nextLine();
             ScreenClear.clear();

@@ -103,7 +103,18 @@ public class Menu {
     // Catalogue
     public static void pageNotFound() { System.out.println("Página: " + EntryPoint.getApiPage() + " não encontrada"); }
     // Catalogue
-    public static void page() { System.out.println("***** Página: " + EntryPoint.getApiPage() + " *****\n"); }
+    public static void pageAndLang() {
+        System.out.println("***** Página: " + EntryPoint.getApiPage() + " *****");
+        System.out.println("* Exibindo os idiomas *");
+        if (EntryPoint.getLangEn().equals("en") && EntryPoint.getLangPt().isEmpty()) {
+            System.out.println("+ Inglês\n");
+        } else if (EntryPoint.getLangPt().equals("pt") && EntryPoint.getLangEn().isEmpty()) {
+            System.out.println("+ Português\n");
+        } else {
+            System.out.println("+ Inglês");
+            System.out.println("+ Português\n");
+        }
+    }
 
     // CatalogueOptions
     public static void askId() { System.out.println("Digite o id do livro: "); }
@@ -112,7 +123,7 @@ public class Menu {
         System.out.println("\n1 - Inglês");
         System.out.println("2 - Português");
         System.out.println("3 - Inglês e Português");
-        System.out.println("0 - Voltar");
+        System.out.println("0 - Voltar\n");
     }
 
     // CatalogueOptions

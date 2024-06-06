@@ -100,8 +100,16 @@ public class EntryPoint {
         }
     }
 
+    public static String getLangPt() {
+        return langPt;
+    }
+
     public static void setLangPt(String langPt) {
         EntryPoint.langPt = langPt;
+    }
+
+    public static String getLangEn() {
+        return langEn;
     }
 
     public static void setLangEn(String langEn) {
