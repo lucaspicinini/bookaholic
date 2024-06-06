@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Archive {
@@ -24,6 +25,8 @@ public class Archive {
     }
 
     public void load() {
+        List<Book> books = bookRepository.findAll();
+
         while (!archiveInput.equals("0")) {
             Pageable pageable = PageRequest.of(pageNumber - 1, 10);
 
@@ -41,7 +44,7 @@ public class Archive {
 
             page.forEach(Book::printBook);
             Menu.archiveMenu();
-            Menu.archiveMenuInfo(pageNumber, page);
+            Menu.archiveMenuInfo(pageNumber, page, books);
             Menu.askOption();
             archiveInput = scanner.nextLine();
             ScreenClear.clear();

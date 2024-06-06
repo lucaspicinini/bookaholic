@@ -4,7 +4,10 @@ import br.com.bookaholic.controller.Archive;
 import br.com.bookaholic.entry.EntryPoint;
 import br.com.bookaholic.model.Author;
 import br.com.bookaholic.model.Book;
+import br.com.bookaholic.model.Language;
 import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 public class Menu {
     private static final String mainMenu = """
@@ -80,18 +83,21 @@ public class Menu {
     // EntryPoint
     public static void exit() { System.out.println("Até a próxima :) ...\n"); }
     // EntryPoint
-    public static void archiveMenuInfo (int pageNumber, Page<Book> page) {
+    public static void archiveMenuInfo (int pageNumber, Page<Book> page, List<Book> books) {
         System.out.println("Exibindo página " + pageNumber + " de " + page.getTotalPages());
         System.out.println("Livros nesta página: " + page.getNumberOfElements());
         System.out.println("Total de Livros Armazenados: " + page.getTotalElements());
         System.out.println("Exibindo os idiomas: ");
+        List<Book> booksEn = books.stream().filter(book -> book.getLanguage().equals(Language.ENGLISH)).toList();
+        List<Book> booksPt = books.stream().filter(book -> book.getLanguage().equals(Language.PORTUGUESE)).toList();
+
         if (Archive.getLangOption().equals("en")) {
-            System.out.println("+ Inglês\n");
+            System.out.println("+ Inglês: " + booksEn.size() + " livros\n");
         } else if (Archive.getLangOption().equals("pt")) {
-            System.out.println("+ Português\n");
+            System.out.println("+ Português: " + booksPt.size() + " livros\n");
         } else {
-            System.out.println("+ Inglês");
-            System.out.println("+ Português\n");
+            System.out.println("+ Inglês: " + booksEn.size() + " livros");
+            System.out.println("+ Português: " + booksPt.size() + " livros\n");
         }
     }
 

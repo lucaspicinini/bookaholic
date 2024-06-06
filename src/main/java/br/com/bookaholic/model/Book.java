@@ -43,6 +43,10 @@ public class Book {
         return title;
     }
 
+    public Language getLanguage() {
+        return language;
+    }
+
     public void printBook() {
         System.out.println("**** Livro: " + title + " ****");
         System.out.println("--- Id: " + idBook);
