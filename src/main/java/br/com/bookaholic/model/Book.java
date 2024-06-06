@@ -21,6 +21,8 @@ public class Book {
     private List<Subject> subjects;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Author> authors;
+    @Enumerated(EnumType.STRING)
+    private Language language;
 
     protected Book() {}
 
@@ -34,6 +36,7 @@ public class Book {
         this.subjects.forEach(subject -> subject.setBook(this));
         this.authors = book.authors().stream().map(Author::new).toList();
         this.authors.forEach(author -> author.setBooks(this));
+        this.language = Language.fromString(book.languages().get(0).trim());
     }
 
     public String getTitle() {
@@ -43,6 +46,11 @@ public class Book {
     public void printBook() {
         System.out.println("**** Livro: " + title + " ****");
         System.out.println("--- Id: " + idBook);
+        if (language == Language.ENGLISH) {
+            System.out.println("--- Idioma: Inglês");
+        } else if (language == Language.PORTUGUESE) {
+            System.out.println("--- Idioma: Português");
+        }
         if (authors != null) {
             System.out.println("--- Autores: ");
             authors.forEach(author -> System.out.println("+ " + author.getName()));

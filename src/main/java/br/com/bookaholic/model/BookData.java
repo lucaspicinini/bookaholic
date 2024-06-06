@@ -11,6 +11,7 @@ public record BookData(
         String title,
         List<AuthorData> authors,
         List<String> subjects,
+        List<String> languages,
         Boolean copyright,
         @JsonAlias("download_count") Integer downloadCount,
         @JsonAlias("detail") String invalidPage
